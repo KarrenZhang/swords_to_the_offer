@@ -142,31 +142,35 @@ int find_min_index(int* array, int len)
 int binary_search(int* p, int start, int end, int num)
 {
     int left = start;
-    int right = end;
-    int mid = (left+right)/2;
-    while(right-left != 1)
+    int right = end-1;
+    int mid;
+	//如果right = end，则以下两处需要修改：
+	//1. 循环条件：while(left < right)；
+	//2. 循环内p[mid] > num时，right = mid；
+    while(left <= right)
     {
+		//防止溢出，同时移位更高效
+		//若写作"mid = (left+right)/2"，left+right的值可能会超出int类型
+		//(或其它类型)的最大值，导致mid的值为负；
+		mid = left + ((right-left)>>1);
         if(num > p[mid])
         {
-            left = mid;
+			//p[mid]的值已经比较过，可忽略，所以可将left指向下一个值
+            left = mid+1;
         }
         else if(num < p[mid])
         {
-            right = mid;
+			//同num > p[mid]
+            right = mid-1;
         }
         else
         {
             cout << "Find m! Its index is " << mid << endl;
             return mid;
         }
-        mid = (left+right)/2;
     }
-    if(num != p[right])
-    {
-        return -1;
-    }
-    cout << "Find m! Its index is " << right << endl;
-    return right;
+    cout << "Dont't Find m!" << endl;
+    return -1;
 }
 
 /*!
