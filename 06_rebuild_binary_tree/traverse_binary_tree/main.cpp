@@ -27,6 +27,7 @@ int preorder_traversal_iterate(BinaryTreeNode *root_node)
 {
     stack<BinaryTreeNode*> node_stack;
     BinaryTreeNode* temp = root_node;
+    //int visited[] = new int[len];
 
     if(temp == NULL)
     {
@@ -39,17 +40,23 @@ int preorder_traversal_iterate(BinaryTreeNode *root_node)
         temp = node_stack.top();
         node_stack.pop();
         cout << temp->m_nValue << " " << endl;
-        if(temp->m_pLeft != NULL)
+        if(temp != NULL)
         {
-            node_stack.push(temp->m_pLeft);
-            continue;
-        }
-        if(temp->m_pRight != NULL)
-        {
-            //node_stack.pop();
             node_stack.push(temp->m_pRight);
-            continue;
+            node_stack.push(temp->m_pLeft);
         }
+//        if(temp->m_pLeft != NULL)
+//        {
+//            node_stack.push(temp->m_pLeft);
+//            continue;
+//        }
+//        if(temp->m_pRight != NULL)
+//        {
+//            node_stack.pop();
+//            node_stack.push(temp->m_pRight);
+//            continue;
+//        }
+
 
     }
 
@@ -132,6 +139,8 @@ int main(int argc, char *argv[])
     btree[8].m_pLeft = NULL;
     btree[8].m_pRight = NULL;
 
+    preorder_traversal_recursive(btree);
+    cout << endl;
     preorder_traversal_iterate(btree);
 
     return a.exec();
